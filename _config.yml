@@ -20,8 +20,8 @@ author: Lv Haojia
 ###############################################
 
 ######
-# navbar-links:
-#   About Me: "aboutme"
+navbar-links:
+  About Me: "aboutme"
 #   Resources:
 #     - Beautiful Jekyll: "https://beautifuljekyll.com"
 #     - Learn markdown: "https://www.markdowntutorial.com/"
