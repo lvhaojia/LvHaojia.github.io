@@ -45,7 +45,7 @@ navbar-links:
 # then specify the following parameter
 ######
 # title-img: /path/to/image
-title-img:  "/assets/img/avatar-icon.png"
+# title-img:  "/assets/img/avatar-icon.png"
 
 
 #####################################
@@ -104,13 +104,14 @@ title-img:  "/assets/img/avatar-icon.png"
 url-pretty: "MyWebsite.com"
 
 # Excerpt word length - Truncate the excerpt of each post on the feed page to the specified number of words
-excerpt_length: 50
+excerpt_length: 20
 
 # Whether or not to show an excerpt for every blog post in the feed page
 feed_show_excerpt: true
 
 # Whether or not to show a list of tags below each post preview in the feed page
-feed_show_tags: true
+######
+# feed_show_tags: true
 
 # Add a search button to the navbar
 post_search: true
