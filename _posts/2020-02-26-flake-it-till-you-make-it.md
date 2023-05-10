@@ -1,17 +1,54 @@
 ---
 layout: post
-title: Flake it till you make it
-subtitle: Excerpt from Soulshaping by Jeff Brown
-cover-img: /assets/img/path.jpg
-thumbnail-img: /assets/img/thumb.png
-share-img: /assets/img/path.jpg
-tags: [books, test]
+title: 图像分类及经典CNN实现之（一）———— LeNet
+gh-repo: 吕昊佳/beautiful-jekyll
+comments: true
 ---
 
-Under what circumstances should we step off a path? When is it essential that we finish what we start? If I bought a bag of peanuts and had an allergic reaction, no one would fault me if I threw it out. If I ended a relationship with a woman who hit me, no one would say that I had a commitment problem. But if I walk away from a seemingly secure route because my soul has other ideas, I am a flake?
+Lenet 是一系列网络的合称，包括 Lenet1 - Lenet5，由 Yann LeCun 等人在 1990 年《Handwritten Digit Recognition with a Back-Propagation Network》中提出，是卷积神经网络的 HelloWorld。
+### LeNet5网络结构
+Lenet是一个 7 层的神经网络，包含 3 个卷积层，2 个池化层，1 个全连接层。其中所有卷积层的所有卷积核都为 5x5，步长 strid=1，池化方法都为全局 pooling，激活函数为 Sigmoid，网络结构如下：
 
-The truth is that no one else can definitively know the path we are here to walk. It’s tempting to listen—many of us long for the omnipotent other—but unless they are genuine psychic intuitives, they can’t know. All others can know is their own truth, and if they’ve actually done the work to excavate it, they will have the good sense to know that they cannot genuinely know anyone else’s. Only soul knows the path it is here to walk. Since you are the only one living in your temple, only you can know its scriptures and interpretive structure.
+![Crepe](/assets/img/LeNet网络结构1.png)
 
-At the heart of the struggle are two very different ideas of success—survival-driven and soul-driven. For survivalists, success is security, pragmatism, power over others. Success is the absence of material suffering, the nourishing of the soul be damned. It is an odd and ironic thing that most of the material power in our world often resides in the hands of younger souls. Still working in the egoic and material realms, they love the sensations of power and focus most of their energy on accumulation. Older souls tend not to be as materially driven. They have already played the worldly game in previous lives and they search for more subtle shades of meaning in this one—authentication rather than accumulation. They are often ignored by the culture at large, although they really are the truest warriors.
+![Crepe](/assets/img/LeNet网络结构2.png)
 
-A soulful notion of success rests on the actualization of our innate image. Success is simply the completion of a soul step, however unsightly it may be. We have finished what we started when the lesson is learned. What a fear-based culture calls a wonderful opportunity may be fruitless and misguided for the soul. Staying in a passionless relationship may satisfy our need for comfort, but it may stifle the soul. Becoming a famous lawyer is only worthwhile if the soul demands it. It is an essential failure if you are called to be a monastic this time around. If you need to explore and abandon ten careers in order to stretch your soul toward its innate image, then so be it. Flake it till you make it.
+### LeNet代码实现
+```python
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class LeNet(nn.Module):
+    def __init__(self):
+        super(LeNet, self).__init__() # super().__init__()调用父类的init方法
+        # 卷积层C1
+        self.conv1 = nn.Conv2d(1, 6, kernel_size=(5, 5)) # 输入通道1, 输出通道6, 卷积核大小为5x5
+        # 池化层S2
+        self.pool1 = nn.MaxPool2d(kernel_size=(2, 2), stride=2) # 窗口大小2x2, 输入与输出通道均为6
+        # 卷积层C3
+        self.conv2 = nn.Conv2d(6, 16, kernel_size=(5, 5))
+        # 池化层S4
+        self.pool2 = nn.MaxPool2d(kernel_size=(2, 2), stride=2) # 窗口大小2x2, 输入与输出通道均为16
+        
+        self.fc0 = nn.Linear(16 * 4 * 4, 120) # 把第三个卷积当作全连接层
+        # 全连接层F
+        self.fc1 = nn.Linear(120, 84) # 神经元个数设置为84
+        # 全连接层(输出层)
+        self.fc2 = nn.Linear(84, 10) # 分为10类
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.pool1(F.relu(x))
+        x = self.conv2(x)
+        x = self.pool2(F.relu(x))
+        x = torch.flatten(x, 1)
+        x = self.fc0(F.relu(x))
+        x = self.fc1(F.relu(x))
+        x = self.fc2(F.relu(x))
+        
+        return x
+```
+
+### 参考
+https://blog.csdn.net/DIPDWC/article/details/117249500
