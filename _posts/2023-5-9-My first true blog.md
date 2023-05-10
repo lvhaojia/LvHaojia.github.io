@@ -7,8 +7,11 @@ comments: true
 ---
 
 ### VGG网络结构
+为了解决初始化（权重初始化）等问题，VGG采用的是一种Pre-training的方式，先训练浅层的的简单网络 VGG11，再复用 VGG11 的权重来初始化 VGG13，如此反复训练并初始化 VGG19，能够使训练时收敛的速度更快。整个网络都使用卷积核尺寸为 3×3 和最大池化尺寸 2×2。
 
-### VGG代码
+
+
+### VGG代码实现
 ```python
 import torch
 import torch.nn as nn
