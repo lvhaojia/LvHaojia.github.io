@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 图像分类及经典CNN实现之（三）----VGGNet
+title: 图像分类及经典CNN实现之（三）———— VGGNet
 subtitle: VGGNet 是由牛津大学视觉几何小组（Visual Geometry Group, VGG）提出的一种深层卷积网络结构，他们以 7.32% 的错误率赢得了 2014 年 ILSVRC 分类任务的亚军（冠军由 GoogLeNet 以 6.65% 的错误率夺得）和 25.32% 的错误率夺得定位任务（Localization）的第一名（GoogLeNet 错误率为 26.44%）。VGG可以看成是加深版本的AlexNet. 都是conv layer + FC layer。
 gh-repo: 吕昊佳/beautiful-jekyll
 comments: true
@@ -8,7 +8,9 @@ comments: true
 
 ### VGG网络结构
 为了解决初始化（权重初始化）等问题，VGG采用的是一种Pre-training的方式，先训练浅层的的简单网络 VGG11，再复用 VGG11 的权重来初始化 VGG13，如此反复训练并初始化 VGG19，能够使训练时收敛的速度更快。整个网络都使用卷积核尺寸为 3×3 和最大池化尺寸 2×2。
+
 ![Crepe](/assets/img/VGG网络结构1.png)
+
 ![Crepe](/assets/img/VGG网络结构2.png)
 
 
